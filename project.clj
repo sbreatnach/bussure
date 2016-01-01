@@ -10,6 +10,7 @@
                  [prismatic/schema "1.0.4"]
                  [cheshire "5.5.0"]
                  [camel-snake-kebab "0.3.2"]
+                 [clj-time "0.9.0"]
 
                  ; HTTP handling
                  [io.aviso/rook "0.1.39"]

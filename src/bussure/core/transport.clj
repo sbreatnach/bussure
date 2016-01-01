@@ -10,14 +10,11 @@
                         public-id :- schema/Str])
 
 (schema/defrecord Route [id :- schema/Str
-                         name :- schema/Str
-                         directions :- [schema/Int]])
+                         name :- schema/Str])
 
 (schema/defrecord Bus [id :- schema/Str
                        name :- schema/Str
-                       position :- Position
-                       direction :- schema/Int
-                       public-id :- schema/Str])
+                       position :- Position] {(schema/optional-key :route) Route})
 
 (schema/defrecord Prediction [bus :- Bus
-                              due-time :- schema/Str])
+                              due-time :- schema/Num])

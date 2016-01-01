@@ -15,5 +15,6 @@
   "Returns the stop data and predictions for the given stop ID. Stop data must
   be in cache otherwise nothing is returned."
   [stop-id]
-  {}
+  ; TODO: add caching for responses
+  (be/stop-predictions-by-id stop-id)
   )
