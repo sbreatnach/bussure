@@ -73,7 +73,6 @@
                 :latitude_north (:latitude be-top-left)
                 :latitude_south (:latitude be-bottom-right)}
         data (make-be-request "stopPointTdi" params)]
-    (log/trace "Raw stop data:" data)
     (filter seq (for [[_ value] (:stop-point-tdi data)]
                   (stop-point->stop value)))
     )
