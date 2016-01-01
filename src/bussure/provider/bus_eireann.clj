@@ -34,6 +34,18 @@
                 (int (* (:longitude position) 3600000.0)))
   )
 
+(defn area->params
+  "Returns the request query parameters as extracted from the given area"
+  [area]
+  (let [be-top-left (position->be-coords (:north-west-position area))
+        be-bottom-right (position->be-coords (:south-east-position area))]
+    {:longitude_west (:longitude be-top-left)
+     :longitude_east (:longitude be-bottom-right)
+     :latitude_north (:latitude be-top-left)
+     :latitude_south (:latitude be-bottom-right)}
+    )
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Server Requests
@@ -85,12 +97,7 @@
 (defn stops-by-area
   "Retrieves the list of stops for a specific area"
   [area]
-  (let [be-top-left (position->be-coords (:north-west-position area))
-        be-bottom-right (position->be-coords (:south-east-position area))
-        params {:longitude_west (:longitude be-top-left)
-                :longitude_east (:longitude be-bottom-right)
-                :latitude_north (:latitude be-top-left)
-                :latitude_south (:latitude be-bottom-right)}
+  (let [params (area->params area)
         data (make-be-request "stopPointTdi" params)]
     (filter seq (for [[_ value] (:stop-point-tdi data)]
                   (stop-point->stop value)))
@@ -120,7 +127,6 @@
   the given "
   [stop-passage now]
   (when (map? stop-passage)
-    (log/trace "Parsing passage data" stop-passage)
     (let [due-data (or (:departure-data stop-passage)
                              (:arrival-data stop-passage))
           vehicle-id (-> stop-passage :vehicle-duid :duid)
@@ -152,7 +158,6 @@
         _ (refresh-routes)
         data (make-be-request "stopPassageTdi" params)
         now (time-coerce/to-epoch (time/now))]
-    (log/trace "Cache data" @cache/temp-cache)
     (sort-by :due-time
              (filter seq (for [[_ value] (:stop-passage-tdi data)]
                            (stop-passage->prediction value now)))
@@ -164,7 +169,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Buses
 
+(defn vehicle->bus
+  "Converts the given raw vehicle data into standardised bus"
+  [vehicle]
+  (when (and (map? vehicle) (:trip-duid vehicle))
+    (transport/->Bus (:duid vehicle)
+                     "unknown"
+                     (location/->Position (:latitude vehicle)
+                                          (:longitude vehicle)))
+    )
+  )
+
 (defn buses-by-area
   "Retrieves the list of buses for a specific area"
   [area]
+  (let [params (area->params area)
+        data (make-be-request "vehicleTdi" params)]
+    (filter seq (for [[_ value] (:vehicle-tdi data)]
+                  (vehicle->bus value)))
+    )
   )
