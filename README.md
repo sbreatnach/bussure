@@ -1,36 +1,25 @@
 # bussure
 
-FIXME: description
+Server backend for the Bussed application. It delivers a simple unified RESTful
+API for viewing bus stops, buses and stop predictions.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+    lein deps
 
 ## Usage
 
-FIXME: explanation
+Development run:
 
-    $ java -jar bussure-0.1.0-standalone.jar [args]
+    lein run
+    
+Server deploy run:
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+    lein uberjar
+    java -jar target/bussure-0.1.0-standalone.jar
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2016 Glicsoft
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the BSD License.
