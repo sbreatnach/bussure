@@ -4,6 +4,7 @@
   :url "http://example.com/FIXME"
   :license {:name "BSD License"
             :url "http://www.linfo.org/bsdlicense.html"}
+  :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.7.0"]
 
                  ; General
@@ -11,6 +12,9 @@
                  [cheshire "5.5.0"]
                  [camel-snake-kebab "0.3.2"]
                  [clj-time "0.9.0"]
+
+                 ; Caching
+                 [org.clojure/core.cache "0.6.4"]
 
                  ; HTTP handling
                  [io.aviso/rook "0.1.39"]

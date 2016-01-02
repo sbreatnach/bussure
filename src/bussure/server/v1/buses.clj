@@ -1,7 +1,7 @@
 (ns bussure.server.v1.buses
   (:require [ring.util.response :as r]
             [bussure.core.location :as location]
-            [bussure.buses :as buses])
+            [bussure.resources.buses :as buses])
   )
 
 (defn index

@@ -117,7 +117,8 @@
             :when (map? value)
             :let [uid (:duid value)]]
       (cache/save-to-cache (cache/route-cache-id cache-key uid)
-                           (transport/->Route uid (:short-name value)))
+                           (transport/->Route uid (:short-name value))
+                           {:ttl cache/ttl-1-day})
       )
     )
   )
@@ -133,17 +134,26 @@
           route-id (-> stop-passage :route-duid :duid)
           due-time (or (:actual-passage-time-utc due-data)
                        (:scheduled-passage-time-utc due-data))]
+      ; only generate when all required data is found and it's not an old prediction
       (when (and due-data vehicle-id route-id due-time (> due-time now))
-        (transport/->Prediction
+        (let [dummy-bus-data (transport/->Bus
+                               ""
+                               (-> due-data :multilingual-direction-text :default-value)
+                               (location/->Position 0.0 0.0))
+
+              bus-cache-id (cache/vehicle-cache-id cache-key vehicle-id)
+              bus-data (if (cache/in-cache? bus-cache-id)
+                         (cache/data-by-id bus-cache-id)
+                         dummy-bus-data
+                         )
+
+              route-cache-id (cache/route-cache-id cache-key route-id)
+              route-data (when (cache/in-cache? route-cache-id)
+                           (cache/data-by-id route-cache-id)
+                           )]
           ; bus constructed from either cached data or placeholder data as
           ; read from passage, plus the route as read from cache
-          (assoc
-            (or (cache/data-by-id (cache/vehicle-cache-id cache-key vehicle-id))
-                (transport/->Bus ""
-                                 (-> due-data :multilingual-direction-text :default-value)
-                                 (location/->Position 0.0 0.0)))
-            :route (cache/data-by-id (cache/route-cache-id cache-key route-id)))
-          due-time
+          (transport/->Prediction (assoc bus-data :route route-data) due-time)
           )
         )
       )
