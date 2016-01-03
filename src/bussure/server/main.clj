@@ -21,7 +21,7 @@
 (defn http-run
   "Starts running the HTTP server"
   [& args]
-  (let [options {:port 8080}]
+  (let [options {:port (Integer/parseInt (or (System/getenv "PORT") "8080"))}]
     (server/run-server (create-handler) options)
     )
   )
