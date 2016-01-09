@@ -33,7 +33,7 @@
                  [org.slf4j/log4j-over-slf4j "1.7.2"]
 
                  ; addons
-                 [com.newrelic.agent.java/newrelic-agent "3.19.2"]
+                 [com.newrelic.agent.java/newrelic-agent "3.24.1"]
                  ]
   :main ^:skip-aot bussure.run
   :target-path "target/%s"
