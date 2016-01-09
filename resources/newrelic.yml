@@ -112,7 +112,7 @@ common: &default_settings
   attributes:
 
     # When true, attributes will be sent to New Relic. The default is true.
-    enabled: true
+    enabled: false
 
     #A comma separated list of attribute keys whose values should
     # be sent to New Relic.
