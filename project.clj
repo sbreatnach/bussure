@@ -31,6 +31,9 @@
                    org.slf4j/slf4j-log4j12]]
                  [ch.qos.logback/logback-classic "1.0.11"]
                  [org.slf4j/log4j-over-slf4j "1.7.2"]
+
+                 ; addons
+                 [com.newrelic.agent.java/newrelic-agent "3.19.2"]
                  ]
   :main ^:skip-aot bussure.run
   :target-path "target/%s"
