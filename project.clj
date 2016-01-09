@@ -17,23 +17,25 @@
                  [org.clojure/core.cache "0.6.4"]
 
                  ; HTTP handling
-                 [io.aviso/rook "0.1.39"]
+                 [io.aviso/rook "0.1.39"
+                  :exclusions [org.clojure/tools.logging]]
                  [ring "1.4.0"]
                  [ring-cors "0.1.7"]
                  [http-kit "2.1.18"]
 
                  ;; logging
                  [org.clojure/tools.logging "0.2.4"
-                  :exclusions
-                  [log4j/log4j
-                   commons-logging/commons-logging
-                   org.slf4j/slf4j-api
-                   org.slf4j/slf4j-log4j12]]
+                  :exclusions [log4j/log4j
+                               commons-logging/commons-logging
+                               org.slf4j/slf4j-api
+                               org.slf4j/slf4j-log4j12]]
                  [ch.qos.logback/logback-classic "1.0.11"]
                  [org.slf4j/log4j-over-slf4j "1.7.2"]
 
                  ; addons
                  [com.newrelic.agent.java/newrelic-agent "3.24.1"]
+                 [yleisradio/new-reliquary "1.0.0"
+                  :exclusions [com.newrelic.agent.java/newrelic-agent]]
                  ]
   :main ^:skip-aot bussure.run
   :target-path "target/%s"
