@@ -185,7 +185,7 @@
   (when (and (map? vehicle) (:trip-duid vehicle))
     (transport/->Bus (:duid vehicle)
                      "unknown"
-                     (location/->Position (:latitude vehicle)
+                     (be-coords->position (:latitude vehicle)
                                           (:longitude vehicle)))
     )
   )
