@@ -30,6 +30,11 @@
     )
   )
 
+(def handler
+  "Base Ring handler"
+  (create-handler)
+  )
+
 (defn http-run
   "Starts running the HTTP server"
   [& args]

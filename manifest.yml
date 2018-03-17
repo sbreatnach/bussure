@@ -1,0 +1,7 @@
+applications:
+  - name: bussure
+    buildpack: liberty-for-java_v3_18-20180213-1234
+    random-route: true
+    path: target/uberjar/bussure-0.2.0-standalone.war
+    memory: 512M
+    instances: 1

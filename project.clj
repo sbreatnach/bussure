@@ -1,4 +1,4 @@
-(defproject bussure "0.1.0-SNAPSHOT"
+(defproject bussure "0.2.0"
   :description "Backend for the Bussed application. Serves transport
                 information from various sources in unified format"
   :url "http://example.com/FIXME"
@@ -37,6 +37,7 @@
                  [yleisradio/new-reliquary "1.0.0"
                   :exclusions [com.newrelic.agent.java/newrelic-agent]]
                  ]
-  :main ^:skip-aot bussure.run
   :target-path "target/%s"
+  :plugins [[lein-ring "0.12.3"]]
+  :ring {:handler bussure.server.main/handler}
   :profiles {:uberjar {:aot :all}})

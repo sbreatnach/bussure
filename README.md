@@ -11,12 +11,14 @@ API for viewing bus stops, buses and stop predictions.
 
 Development run:
 
-    lein run
+    lein trampoline ring server
     
-Server deploy run:
+Server deploy to Bluemix cloud:
 
-    lein uberjar
-    java -jar target/bussure-0.1.0-standalone.jar
+    lein ring uberwar
+    cf buildpacks
+    emacs manifest.yml <-- update to latest Liberty buildpack
+    cf push
 
 ## License
 
